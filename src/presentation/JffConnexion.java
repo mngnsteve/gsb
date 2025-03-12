@@ -4,6 +4,8 @@
  */
 package presentation;
 
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author mohamed.boussemaha
@@ -15,6 +17,12 @@ public class JffConnexion extends javax.swing.JFrame {
      */
     public JffConnexion() {
         initComponents();
+        // MISE EN PLACE D'UN FOND BLANC
+        getContentPane().setBackground(new java.awt.Color(255, 255, 255));
+        // Ajout des groupes bouton praticien et laborantin
+        ButtonGroup g = new ButtonGroup();
+        g.add(jRBPraticien);
+        g.add(jRBLaborantin);
     }
 
     /**
@@ -26,25 +34,25 @@ public class JffConnexion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPFMdp = new javax.swing.JPasswordField();
         jBtValider = new javax.swing.JButton();
         jBtQuitter = new javax.swing.JButton();
         jLAuthentification = new javax.swing.JLabel();
         jLMail = new javax.swing.JLabel();
         jLMdp = new javax.swing.JLabel();
-        jTMail = new javax.swing.JTextField();
-        jLFond = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jTFMail = new javax.swing.JTextField();
+        jTFMdp = new javax.swing.JTextField();
+        jRBPraticien = new javax.swing.JRadioButton();
+        jRBLaborantin = new javax.swing.JRadioButton();
         jLlogo = new javax.swing.JLabel();
+        jLFond = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPFMdp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPFMdpActionPerformed(evt);
-            }
-        });
+        setTitle("Connexion");
+        setForeground(java.awt.Color.white);
+        setPreferredSize(new java.awt.Dimension(530, 400));
+        setResizable(false);
+        setSize(new java.awt.Dimension(570, 400));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jBtValider.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/valider.png"))); // NOI18N
         jBtValider.setText("Valider");
@@ -53,6 +61,7 @@ public class JffConnexion extends javax.swing.JFrame {
                 jBtValiderActionPerformed(evt);
             }
         });
+        getContentPane().add(jBtValider, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, -1, -1));
 
         jBtQuitter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/quitter.png"))); // NOI18N
         jBtQuitter.setText("Quitter");
@@ -61,118 +70,54 @@ public class JffConnexion extends javax.swing.JFrame {
                 jBtQuitterActionPerformed(evt);
             }
         });
+        getContentPane().add(jBtQuitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, -1, -1));
 
         jLAuthentification.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLAuthentification.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ecran.png"))); // NOI18N
         jLAuthentification.setText("Authentification");
+        getContentPane().add(jLAuthentification, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
 
         jLMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/utilisateur.png"))); // NOI18N
-        jLMail.setText("Adresse mail");
+        jLMail.setText("Adresse mail :");
+        getContentPane().add(jLMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
         jLMdp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/key.png"))); // NOI18N
-        jLMdp.setText("Mot de passe");
+        jLMdp.setText("Mot de passe :");
+        getContentPane().add(jLMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
 
-        jLFond.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondClair.png"))); // NOI18N
-
-        jRadioButton1.setText("Praticien");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jTFMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jTFMailActionPerformed(evt);
             }
         });
+        getContentPane().add(jTFMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 200, -1));
+        getContentPane().add(jTFMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 200, -1));
 
-        jRadioButton2.setText("Laborantin");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        jRBPraticien.setText("Praticien");
+        jRBPraticien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                jRBPraticienActionPerformed(evt);
             }
         });
+        getContentPane().add(jRBPraticien, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
+
+        jRBLaborantin.setText("Laborantin");
+        jRBLaborantin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBLaborantinActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jRBLaborantin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
 
         jLlogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoGSB.jpg"))); // NOI18N
+        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 120, 78));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(150, 150, 150)
-                            .addComponent(jLlogo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(50, 50, 50)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(50, 50, 50)
-                                    .addComponent(jLAuthentification))
-                                .addComponent(jLMail)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(150, 150, 150)
-                                    .addComponent(jRadioButton1)))
-                            .addGap(2, 2, 2)
-                            .addComponent(jRadioButton2))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(50, 50, 50)
-                            .addComponent(jLMdp))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(180, 180, 180)
-                            .addComponent(jTMail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLFond, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(180, 180, 180)
-                            .addComponent(jPFMdp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(200, 200, 200)
-                            .addComponent(jBtValider)
-                            .addGap(24, 24, 24)
-                            .addComponent(jBtQuitter)))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 392, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLlogo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(2, 2, 2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(jLAuthentification)
-                            .addGap(26, 26, 26)
-                            .addComponent(jLMail)
-                            .addGap(94, 94, 94)
-                            .addComponent(jRadioButton1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(210, 210, 210)
-                            .addComponent(jRadioButton2))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(160, 160, 160)
-                            .addComponent(jLMdp))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(100, 100, 100)
-                            .addComponent(jTMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLFond, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(160, 160, 160)
-                            .addComponent(jPFMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(9, 9, 9)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jBtValider)
-                        .addComponent(jBtQuitter))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        jLFond.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondClair.png"))); // NOI18N
+        getContentPane().add(jLFond, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 435, 222));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jPFMdpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPFMdpActionPerformed
-
-    }//GEN-LAST:event_jPFMdpActionPerformed
 
     private void jBtValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtValiderActionPerformed
 
@@ -182,13 +127,17 @@ public class JffConnexion extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jBtQuitterActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    private void jRBPraticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBPraticienActionPerformed
+        jRBPraticien.setSelected(true);
+    }//GEN-LAST:event_jRBPraticienActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void jRBLaborantinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBLaborantinActionPerformed
+        jRBLaborantin.setSelected(true);       
+    }//GEN-LAST:event_jRBLaborantinActionPerformed
+
+    private void jTFMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFMailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_jTFMailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +169,7 @@ public class JffConnexion extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new JffConnexion().setVisible(true);
             }
@@ -234,9 +184,9 @@ public class JffConnexion extends javax.swing.JFrame {
     private javax.swing.JLabel jLMail;
     private javax.swing.JLabel jLMdp;
     private javax.swing.JLabel jLlogo;
-    private javax.swing.JPasswordField jPFMdp;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTMail;
+    private javax.swing.JRadioButton jRBLaborantin;
+    private javax.swing.JRadioButton jRBPraticien;
+    private javax.swing.JTextField jTFMail;
+    private javax.swing.JTextField jTFMdp;
     // End of variables declaration//GEN-END:variables
 }

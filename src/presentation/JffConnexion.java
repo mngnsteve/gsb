@@ -5,21 +5,25 @@
 package presentation;
 
 import javax.swing.ButtonGroup;
+import metier.Praticien;
+import metier.Visiteur;
 
 /**
  *
  * @author mohamed.boussemaha
  */
 public class JffConnexion extends javax.swing.JFrame {
-
+    
+    private Praticien lePraticien;
+    private Visiteur leVisiteur;
     /**
-     * Creates new form JFConnexion
+     * Creates new form JffConnexion
      */
     public JffConnexion() {
         initComponents();
         // MISE EN PLACE D'UN FOND BLANC
         getContentPane().setBackground(new java.awt.Color(255, 255, 255));
-        // Ajout des groupes bouton praticien et laborantin
+        // Ajout des groupes bouton praticien et visiteur
         ButtonGroup g = new ButtonGroup();
         g.add(jRBPraticien);
         g.add(jRBVisiteur);
@@ -120,7 +124,7 @@ public class JffConnexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtValiderActionPerformed
-
+        
     }//GEN-LAST:event_jBtValiderActionPerformed
 
     private void jBtQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtQuitterActionPerformed

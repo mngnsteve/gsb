@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author mohamed.boussemaha
  */
-public class Laborantin {
+public class Visiteur {
     private int id;
     private String nom;
     private String prenom;
@@ -22,7 +22,7 @@ public class Laborantin {
      * @param nom
      * @param prenom
      */
-    public Laborantin(int id, String nom, String prenom) {
+    public Visiteur(int id, String nom, String prenom) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -70,7 +70,7 @@ public class Laborantin {
     }
     
     /**
-     *
+     * Méthodes
      * @param obj
      * @return
      */
@@ -85,7 +85,7 @@ public class Laborantin {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Laborantin other = (Laborantin) obj;
+        final Visiteur other = (Visiteur) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -101,7 +101,7 @@ public class Laborantin {
      */
     @Override
     public String toString() {
-        return "Laborantin{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + '}';
+        return "Visiteur{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + '}';
     }
     
 }

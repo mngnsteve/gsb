@@ -22,7 +22,7 @@ public class JffConnexion extends javax.swing.JFrame {
         // Ajout des groupes bouton praticien et laborantin
         ButtonGroup g = new ButtonGroup();
         g.add(jRBPraticien);
-        g.add(jRBLaborantin);
+        g.add(jRBVisiteur);
     }
 
     /**
@@ -42,7 +42,7 @@ public class JffConnexion extends javax.swing.JFrame {
         jTFMail = new javax.swing.JTextField();
         jTFMdp = new javax.swing.JTextField();
         jRBPraticien = new javax.swing.JRadioButton();
-        jRBLaborantin = new javax.swing.JRadioButton();
+        jRBVisiteur = new javax.swing.JRadioButton();
         jLlogo = new javax.swing.JLabel();
         jLFond = new javax.swing.JLabel();
 
@@ -101,13 +101,13 @@ public class JffConnexion extends javax.swing.JFrame {
         });
         getContentPane().add(jRBPraticien, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
-        jRBLaborantin.setText("Laborantin");
-        jRBLaborantin.addActionListener(new java.awt.event.ActionListener() {
+        jRBVisiteur.setText("Visiteur");
+        jRBVisiteur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBLaborantinActionPerformed(evt);
+                jRBVisiteurActionPerformed(evt);
             }
         });
-        getContentPane().add(jRBLaborantin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
+        getContentPane().add(jRBVisiteur, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
 
         jLlogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoGSB.jpg"))); // NOI18N
         getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 120, 78));
@@ -131,9 +131,9 @@ public class JffConnexion extends javax.swing.JFrame {
         jRBPraticien.setSelected(true);
     }//GEN-LAST:event_jRBPraticienActionPerformed
 
-    private void jRBLaborantinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBLaborantinActionPerformed
-        jRBLaborantin.setSelected(true);       
-    }//GEN-LAST:event_jRBLaborantinActionPerformed
+    private void jRBVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBVisiteurActionPerformed
+        jRBVisiteur.setSelected(true);       
+    }//GEN-LAST:event_jRBVisiteurActionPerformed
 
     private void jTFMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFMailActionPerformed
         // TODO add your handling code here:
@@ -184,8 +184,8 @@ public class JffConnexion extends javax.swing.JFrame {
     private javax.swing.JLabel jLMail;
     private javax.swing.JLabel jLMdp;
     private javax.swing.JLabel jLlogo;
-    private javax.swing.JRadioButton jRBLaborantin;
     private javax.swing.JRadioButton jRBPraticien;
+    private javax.swing.JRadioButton jRBVisiteur;
     private javax.swing.JTextField jTFMail;
     private javax.swing.JTextField jTFMdp;
     // End of variables declaration//GEN-END:variables

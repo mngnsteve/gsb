@@ -90,7 +90,7 @@ public class Medicament {
     }
     
     /**
-     *
+     * Méthodes
      * @param obj
      * @return
      */

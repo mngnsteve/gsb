@@ -4,6 +4,8 @@
  */
 package presentation;
 
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author mohamed.boussemaha
@@ -11,10 +13,16 @@ package presentation;
 public class JffConnexion extends javax.swing.JFrame {
 
     /**
-     * Creates new form JffConnexion
+     * Creates new form JFConnexion
      */
     public JffConnexion() {
         initComponents();
+        // MISE EN PLACE D'UN FOND BLANC
+        getContentPane().setBackground(new java.awt.Color(255, 255, 255));
+        // Ajout des groupes bouton praticien et laborantin
+        ButtonGroup g = new ButtonGroup();
+        g.add(jRBPraticien);
+        g.add(jRBVisiteur);
     }
 
     /**
@@ -26,27 +34,25 @@ public class JffConnexion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPFMdp = new javax.swing.JPasswordField();
         jBtValider = new javax.swing.JButton();
         jBtQuitter = new javax.swing.JButton();
         jLAuthentification = new javax.swing.JLabel();
         jLMail = new javax.swing.JLabel();
         jLMdp = new javax.swing.JLabel();
-        jTMail = new javax.swing.JTextField();
-        jLFond = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jTFMail = new javax.swing.JTextField();
+        jTFMdp = new javax.swing.JTextField();
+        jRBPraticien = new javax.swing.JRadioButton();
+        jRBVisiteur = new javax.swing.JRadioButton();
         jLlogo = new javax.swing.JLabel();
+        jLFond = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Connexion");
+        setForeground(java.awt.Color.white);
+        setPreferredSize(new java.awt.Dimension(530, 400));
+        setResizable(false);
+        setSize(new java.awt.Dimension(570, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPFMdp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPFMdpActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jPFMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 200, -1));
 
         jBtValider.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/valider.png"))); // NOI18N
         jBtValider.setText("Valider");
@@ -55,7 +61,7 @@ public class JffConnexion extends javax.swing.JFrame {
                 jBtValiderActionPerformed(evt);
             }
         });
-        getContentPane().add(jBtValider, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, -1, -1));
+        getContentPane().add(jBtValider, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, -1, -1));
 
         jBtQuitter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/quitter.png"))); // NOI18N
         jBtQuitter.setText("Quitter");
@@ -64,64 +70,74 @@ public class JffConnexion extends javax.swing.JFrame {
                 jBtQuitterActionPerformed(evt);
             }
         });
-        getContentPane().add(jBtQuitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, -1, -1));
+        getContentPane().add(jBtQuitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, -1, -1));
 
         jLAuthentification.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLAuthentification.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ecran.png"))); // NOI18N
         jLAuthentification.setText("Authentification");
-        getContentPane().add(jLAuthentification, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
+        getContentPane().add(jLAuthentification, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
 
         jLMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/utilisateur.png"))); // NOI18N
-        jLMail.setText("Adresse mail");
-        getContentPane().add(jLMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, -1, -1));
+        jLMail.setText("Adresse mail :");
+        getContentPane().add(jLMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
         jLMdp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/key.png"))); // NOI18N
-        jLMdp.setText("Mot de passe");
-        getContentPane().add(jLMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, -1, -1));
-        getContentPane().add(jTMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 200, -1));
+        jLMdp.setText("Mot de passe :");
+        getContentPane().add(jLMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
+
+        jTFMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFMailActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTFMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 200, -1));
+        getContentPane().add(jTFMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 200, -1));
+
+        jRBPraticien.setText("Praticien");
+        jRBPraticien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBPraticienActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jRBPraticien, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
+
+        jRBVisiteur.setText("Visiteur");
+        jRBVisiteur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRBVisiteurActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jRBVisiteur, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
+
+        jLlogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoGSB.jpg"))); // NOI18N
+        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 120, 78));
 
         jLFond.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondClair.png"))); // NOI18N
-        getContentPane().add(jLFond, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 435, 220));
-
-        jRadioButton1.setText("Praticien");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
-
-        jRadioButton2.setText("Laborantin");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, -1, -1));
-        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 130, 80));
+        getContentPane().add(jLFond, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 435, 222));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPFMdpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPFMdpActionPerformed
-
-    }//GEN-LAST:event_jPFMdpActionPerformed
-
     private void jBtValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtValiderActionPerformed
-       
+
     }//GEN-LAST:event_jBtValiderActionPerformed
 
     private void jBtQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtQuitterActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jBtQuitterActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    private void jRBPraticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBPraticienActionPerformed
+        jRBPraticien.setSelected(true);
+    }//GEN-LAST:event_jRBPraticienActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void jRBVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBVisiteurActionPerformed
+        jRBVisiteur.setSelected(true);       
+    }//GEN-LAST:event_jRBVisiteurActionPerformed
+
+    private void jTFMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFMailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_jTFMailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,6 +165,7 @@ public class JffConnexion extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(JffConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -167,9 +184,9 @@ public class JffConnexion extends javax.swing.JFrame {
     private javax.swing.JLabel jLMail;
     private javax.swing.JLabel jLMdp;
     private javax.swing.JLabel jLlogo;
-    private javax.swing.JPasswordField jPFMdp;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTMail;
+    private javax.swing.JRadioButton jRBPraticien;
+    private javax.swing.JRadioButton jRBVisiteur;
+    private javax.swing.JTextField jTFMail;
+    private javax.swing.JTextField jTFMdp;
     // End of variables declaration//GEN-END:variables
 }

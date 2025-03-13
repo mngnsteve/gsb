@@ -4,9 +4,13 @@
  */
 
 package tests;
+import accesBDD.AvisMySQL;
 import accesBDD.Connexion;
 import accesBDD.MedicamentMySQL;
+import accesBDD.PraticienMySQL;
+import accesBDD.VisiteurMySQL;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,12 +20,17 @@ public class BDD {
     
     public static void main (String[] args) {
         // Connection connexion = Connexion.getConnect("10.121.38.66", "bdgsb","adminGSB", "mdpGSB ");
-        MedicamentMySQL medicament = new MedicamentMySQL();
+        AvisMySQL tousLesAvis = new AvisMySQL();
         
-        String[] infos = medicament.rechercherMedicament("TRIMYCINE");
+        ArrayList<String[]> lesAvis = tousLesAvis.obtenirAvis("TRIMYCINE");
         
-        for (int i = 0; i < infos.length; i++) {
-            System.out.println(infos[i]);
-        }
+        // for (int i = 0; i < lesAvis.size(); i++) {
+        //    String[] avis = lesAvis.get(i);
+        //    for (int j = 0; j < avis.length; j++) {
+        //        System.out.println(avis[j]);
+        //    }
+        //}
+        
+        tousLesAvis.envoyerAvis("ADIMOL9", 1, "Mouais pas mal");
     }
 }

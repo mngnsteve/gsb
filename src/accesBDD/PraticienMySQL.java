@@ -30,6 +30,7 @@ public class PraticienMySQL {
     /**
      * Permet de rechercher le medicament avec son nom
      * @param utilisateur     :  identifiant de l'utilisateur
+     * @param mdp   :   mot de passe de l'utilisateur
      * @return String   :  prénom et nom du client s'il existe,chaine vide sinon
      */
     public String[] rechercherPraticien(String utilisateur, String mdp) {

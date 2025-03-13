@@ -4,6 +4,11 @@
  */
 package presentation;
 
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author mohamed.boussemaha
@@ -14,6 +19,8 @@ public class JffMedicament extends javax.swing.JFrame {
      * Creates new form JffMedicament
      */
     public JffMedicament() {
+        // fond blanc
+        getContentPane().setBackground(new java.awt.Color(255, 255, 255));
         initComponents();
     }
 
@@ -28,31 +35,39 @@ public class JffMedicament extends javax.swing.JFrame {
 
         jLlogo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePanier = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        jTableMedicament = new javax.swing.JTable();
+        jBAvis = new javax.swing.JButton();
+        jBVoirAvis = new javax.swing.JButton();
+        jCBType = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jTFBarreRecherche = new javax.swing.JTextField();
+        jTBRechercher = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Médicament");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLlogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.jpg"))); // NOI18N
-        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 290, 90));
+        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 290, 90));
 
-        jTablePanier.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMedicament.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Type", "Nom", "null", "Title 4", "Title 5"
+                "Type", "Nom", "Prix"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -63,25 +78,90 @@ public class JffMedicament extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTablePanier);
+        jScrollPane1.setViewportView(jTableMedicament);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 450, 320));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 450, 320));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
-        );
+        jBAvis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/commentaire.png"))); // NOI18N
+        jBAvis.setText("Envoyer un avis");
+        jBAvis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAvisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jBAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 530, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 230, 320));
+        jBVoirAvis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/commentaire.png"))); // NOI18N
+        jBVoirAvis.setText("Voir avis");
+        jBVoirAvis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBVoirAvisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jBVoirAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 530, -1, -1));
+
+        jCBType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTypeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jCBType, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 200, 30));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, -1, 320));
+
+        jTFBarreRecherche.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFBarreRechercheKeyReleased(evt);
+            }
+        });
+        getContentPane().add(jTFBarreRecherche, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 200, 30));
+
+        jTBRechercher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rechercher.png"))); // NOI18N
+        jTBRechercher.setText("Rechercher");
+        jTBRechercher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBRechercherActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTBRechercher, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, -1, 30));
+
+        jLabel1.setText("Type :");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBAvisActionPerformed
+
+    private void jCBTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTypeActionPerformed
+
+    private void jTBRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBRechercherActionPerformed
+        // Recherche du médicament saisi dans la barre de recherche
+        DefaultTableModel ob=(DefaultTableModel) jTableMedicament.getModel();
+        TableRowSorter<DefaultTableModel> obj=new TableRowSorter<>(ob);
+        jTableMedicament.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(jTFBarreRecherche.getText()));
+    }//GEN-LAST:event_jTBRechercherActionPerformed
+
+    private void jTFBarreRechercheKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBarreRechercheKeyReleased
+        DefaultTableModel ob=(DefaultTableModel) jTableMedicament.getModel();
+        TableRowSorter<DefaultTableModel> obj=new TableRowSorter<>(ob);
+        jTableMedicament.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(jTFBarreRecherche.getText()));
+    }//GEN-LAST:event_jTFBarreRechercheKeyReleased
+
+    private void jBVoirAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoirAvisActionPerformed
+        
+    }//GEN-LAST:event_jBVoirAvisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,9 +199,16 @@ public class JffMedicament extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAvis;
+    private javax.swing.JButton jBVoirAvis;
+    private javax.swing.JComboBox<String> jCBType;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLlogo;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablePanier;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToggleButton jTBRechercher;
+    private javax.swing.JTextField jTFBarreRecherche;
+    private javax.swing.JTable jTableMedicament;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

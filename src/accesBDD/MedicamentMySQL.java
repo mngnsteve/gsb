@@ -97,4 +97,23 @@ public class MedicamentMySQL {
         
         return lesMedicaments;
     }
+    public ArrayList<String> obtenirFamilles() {
+        ArrayList<String> familles = new ArrayList<String>();
+        
+        try {
+            stmt = laConnection.createStatement();
+            // Accès la table famille
+            result = stmt.executeQuery("SELECT * FROM FAMILLE");
+            
+            while (result.next()) {
+                familles.add(result.getString(2));
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQLException : " + ex.getMessage());
+            System.out.println("SQLState : " + ex.getSQLState());
+            System.out.println("Code erreur: " + ex.getErrorCode());
+        }
+        
+        return familles;
+    }
 }

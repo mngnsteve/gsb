@@ -24,7 +24,7 @@ public class PraticienMySQL {
      */
     // 10.121.38.66
     public PraticienMySQL() {
-        laConnection = Connexion.getConnect("127.0.0.1", "bdgsb", "adminGSB", "mdpGSB");
+        laConnection = Connexion.getConnect("10.121.38.66", "bdgsb", "adminGSB", "mdpGSB");
     }
     
     /**

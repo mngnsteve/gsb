@@ -156,15 +156,15 @@ public class JffMedicament extends javax.swing.JFrame {
 
     private void jTFBarreRechercheKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBarreRechercheKeyReleased
     // Récupérer le texte saisi dans la barre de recherche
-    String queryRecherche = jTFBarreRecherche.getText().trim();
+    String Recherche = jTFBarreRecherche.getText().trim();
     
-    // Vérifier si la recherche n'est pas vide
-    if (!queryRecherche.isEmpty()) {
-        // Créer une instance de MedicamentMySQL pour interagir avec la base de données
+    // Vérifie si la recherche n'est pas vide
+    if (!Recherche.isEmpty()) {
+        // Crée une instance de MedicamentMySQL pour la base de données
         MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
         
         // Appele la méthode rechercherMedicament
-        String[] medicamentData = medicamentMySQL.rechercherMedicament(queryRecherche);
+        String[] medicamentData = medicamentMySQL.rechercherMedicament(Recherche);
         
         // Si un médicament a été trouvé mettre à jour la table
         if (medicamentData[0] != null) {
@@ -182,7 +182,6 @@ public class JffMedicament extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Aucun médicament trouvé.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
-        // Si le champ de recherche est vide, on peut soit afficher tous les médicaments, soit laisser la table vide (facultatif)
         DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
         model.setRowCount(0);
     }
@@ -196,10 +195,10 @@ public class JffMedicament extends javax.swing.JFrame {
     private void jBVoirAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoirAvisActionPerformed
         int selectedRow = jTableMedicament.getSelectedRow();
         if (selectedRow != -1) {
-            // Récupere le nom du médicament dans la colonne "Nom"
+            // Récupere le nom du médicament dans la colonne "Nom" du tableau
             String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1);
             
-//            //Récupere le commentaire associé à ce médicament
+//            //Récupere le commentaire associé au médicament
 //            String commentaire = ;
 //
 //            //Affiche les commentaires dans une popup

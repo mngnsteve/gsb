@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import metier.Medicament;
 
 /**
  *
@@ -64,5 +65,36 @@ public class MedicamentMySQL {
               System.out.println("Code erreur : " + ex.getErrorCode());  
         }
          return informations;
+    }
+    
+    public ArrayList<Medicament> obtenirMedicaments() {
+        ArrayList<Medicament> lesMedicaments = new ArrayList<Medicament>();
+        
+        try {
+            stmt = laConnection.createStatement();
+            // Accès à la table medicament
+            result = stmt.executeQuery("SELECT * FROM MEDICAMENT INNER JOIN FAMILLE ON FAMILLE.fCode = MEDICAMENT.fCode");
+            
+            while (result.next()) {
+                float prix = result.getString(6) == null ? 0f : Float.parseFloat(result.getString(6)); 
+                Medicament medicament = new Medicament(
+                        Integer.parseInt(result.getString(1)),
+                        result.getString(9),
+                        result.getString(2),
+                        result.getString(3),
+                        prix
+                );
+                
+                lesMedicaments.add(medicament);
+            }
+           result.close();
+           stmt.close();
+        } catch (SQLException ex) {
+              System.out.println("SQLException : " + ex.getMessage());
+              System.out.println("SQLState : " + ex.getSQLState());
+              System.out.println("Code erreur : " + ex.getErrorCode());  
+        }
+        
+        return lesMedicaments;
     }
 }

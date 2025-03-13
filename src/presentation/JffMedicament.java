@@ -4,7 +4,10 @@
  */
 package presentation;
 
+import accesBDD.AvisMySQL;
 import accesBDD.MedicamentMySQL;
+import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -14,8 +17,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author mohamed.boussemaha
  */
-public class JffMedicament extends javax.swing.JFrame {
-
+public class JffMedicament extends javax.swing.JFrame {        
     /**
      * Creates new form JffMedicament
      */
@@ -48,10 +50,11 @@ public class JffMedicament extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Médicament");
+        setPreferredSize(new java.awt.Dimension(800, 650));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLlogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.jpg"))); // NOI18N
-        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 290, 90));
+        getContentPane().add(jLlogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 290, 90));
 
         jTableMedicament.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,7 +93,7 @@ public class JffMedicament extends javax.swing.JFrame {
                 jBAvisActionPerformed(evt);
             }
         });
-        getContentPane().add(jBAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 530, -1, -1));
+        getContentPane().add(jBAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, -1, -1));
 
         jBVoirAvis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/commentaire.png"))); // NOI18N
         jBVoirAvis.setText("Voir avis");
@@ -99,7 +102,7 @@ public class JffMedicament extends javax.swing.JFrame {
                 jBVoirAvisActionPerformed(evt);
             }
         });
-        getContentPane().add(jBVoirAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 530, -1, -1));
+        getContentPane().add(jBVoirAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, -1, -1));
 
         jCBType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jCBType.addActionListener(new java.awt.event.ActionListener() {
@@ -166,51 +169,63 @@ public class JffMedicament extends javax.swing.JFrame {
         // Appele la méthode rechercherMedicament
         String[] medicamentData = medicamentMySQL.rechercherMedicament(Recherche);
         
-        // Si un médicament a été trouvé mettre à jour la table
+        // Si un médicament a été trouvé, mettre à jour la table
         if (medicamentData[0] != null) {
             DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
             model.setRowCount(0);
             
             // Ajouter les données récupérées dans la table
             model.addRow(new Object[]{
-                medicamentData[1],
-                medicamentData[2],
-                medicamentData[3]
+                medicamentData[1], // Type
+                medicamentData[2], // Nom
+                medicamentData[3]  // Prix
             });
         } else {
             // Si aucun médicament n'a été trouvé, afficher un message à l'utilisateur
             JOptionPane.showMessageDialog(this, "Aucun médicament trouvé.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
+        // Si la barre de recherche est vide, réinitialiser le tableau
         DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
         model.setRowCount(0);
     }
-        
-        DefaultTableModel ob=(DefaultTableModel) jTableMedicament.getModel();
-        TableRowSorter<DefaultTableModel> obj=new TableRowSorter<>(ob);
-        jTableMedicament.setRowSorter(obj);
-        obj.setRowFilter(RowFilter.regexFilter(jTFBarreRecherche.getText()));
     }//GEN-LAST:event_jTFBarreRechercheKeyReleased
 
     private void jBVoirAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoirAvisActionPerformed
-        int selectedRow = jTableMedicament.getSelectedRow();
-        if (selectedRow != -1) {
-            // Récupere le nom du médicament dans la colonne "Nom" du tableau
-            String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1);
+    int selectedRow = jTableMedicament.getSelectedRow();
+    if (selectedRow != -1) {
+        // Récupére le nom du médicament sélectionner
+        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1);
+        
+        // Crée une instance de AvisMySQL pour récuperer les avis
+        AvisMySQL avisMySQL = new AvisMySQL();
+        
+        // Appele la méthode pour obtenir les avis du médicament sélectionné
+        ArrayList<String[]> avisList = avisMySQL.obtenirAvis(nomMedicament);
+        
+        // Affiche les avis dans une popup
+        if (avisList.size() > 0) {
+            StringBuilder commentaires = new StringBuilder();
             
-//            //Récupere le commentaire associé au médicament
-//            String commentaire = ;
-//
-//            //Affiche les commentaires dans une popup
-//            if (commentaire != null) {
-//                JOptionPane.showMessageDialog(this, commentaire, "Commentaires pour " + nomMedicament, JOptionPane.INFORMATION_MESSAGE);
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Aucun commentaire disponible pour ce médicament.", "Commentaires", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un médicament.", "Erreur", JOptionPane.WARNING_MESSAGE);
-//        }
+            // Parcoure la liste des avis et ajoute chaque commentaire au texte
+            for (String[] avis : avisList) {
+                commentaires.append("Auteur: ").append(avis[1]).append("\n");
+                commentaires.append("Date: ").append(avis[3]).append("\n");
+                commentaires.append("Commentaire: ").append(avis[2]).append("\n\n");
+            }
+            
+            // Afficher les commentaires dans une boîte de dialogue
+            JOptionPane.showMessageDialog(this, commentaires.toString(), 
+                                          "Commentaires pour " + nomMedicament, 
+                                          JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Aucun commentaire disponible pour ce médicament.", 
+                                          "Commentaires", JOptionPane.INFORMATION_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Veuillez sélectionner un médicament.", 
+                                      "Erreur", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_jBVoirAvisActionPerformed
 
     /**

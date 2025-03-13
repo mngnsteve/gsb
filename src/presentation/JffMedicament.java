@@ -23,7 +23,7 @@ public class JffMedicament extends javax.swing.JFrame {
         getContentPane().setBackground(new java.awt.Color(255, 255, 255));
         initComponents();
     }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,6 +134,7 @@ public class JffMedicament extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvisActionPerformed
@@ -160,7 +161,24 @@ public class JffMedicament extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFBarreRechercheKeyReleased
 
     private void jBVoirAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoirAvisActionPerformed
-        
+        int selectedRow = jTableMedicament.getSelectedRow();
+        if (selectedRow != -1) {
+            // Récupere le nom du médicament dans la colonne "Nom"
+            String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1);
+            
+//            //Récupere le commentaire associé à ce médicament
+//            String commentaire = ;
+//
+//            //Affiche les commentaires dans une popup
+//            if (commentaire != null) {
+//                JOptionPane.showMessageDialog(this, commentaire, "Commentaires pour " + nomMedicament, JOptionPane.INFORMATION_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Aucun commentaire disponible pour ce médicament.", "Commentaires", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un médicament.", "Erreur", JOptionPane.WARNING_MESSAGE);
+//        }
+        }
     }//GEN-LAST:event_jBVoirAvisActionPerformed
 
     /**

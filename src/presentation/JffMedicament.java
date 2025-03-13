@@ -4,6 +4,7 @@
  */
 package presentation;
 
+import accesBDD.MedicamentMySQL;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -154,6 +155,38 @@ public class JffMedicament extends javax.swing.JFrame {
     }//GEN-LAST:event_jTBRechercherActionPerformed
 
     private void jTFBarreRechercheKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBarreRechercheKeyReleased
+    // Récupérer le texte saisi dans la barre de recherche
+    String queryRecherche = jTFBarreRecherche.getText().trim();
+    
+    // Vérifier si la recherche n'est pas vide
+    if (!queryRecherche.isEmpty()) {
+        // Créer une instance de MedicamentMySQL pour interagir avec la base de données
+        MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
+        
+        // Appele la méthode rechercherMedicament
+        String[] medicamentData = medicamentMySQL.rechercherMedicament(queryRecherche);
+        
+        // Si un médicament a été trouvé mettre à jour la table
+        if (medicamentData[0] != null) {
+            DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
+            model.setRowCount(0);
+            
+            // Ajouter les données récupérées dans la table
+            model.addRow(new Object[]{
+                medicamentData[1],
+                medicamentData[2],
+                medicamentData[3]
+            });
+        } else {
+            // Si aucun médicament n'a été trouvé, afficher un message à l'utilisateur
+            JOptionPane.showMessageDialog(this, "Aucun médicament trouvé.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
+        }
+    } else {
+        // Si le champ de recherche est vide, on peut soit afficher tous les médicaments, soit laisser la table vide (facultatif)
+        DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
+        model.setRowCount(0);
+    }
+        
         DefaultTableModel ob=(DefaultTableModel) jTableMedicament.getModel();
         TableRowSorter<DefaultTableModel> obj=new TableRowSorter<>(ob);
         jTableMedicament.setRowSorter(obj);

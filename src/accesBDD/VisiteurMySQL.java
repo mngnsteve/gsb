@@ -24,7 +24,7 @@ public class VisiteurMySQL {
      */
     // 10.121.38.66
     public VisiteurMySQL() {
-        laConnection = Connexion.getConnect("10.121.38.66", "bdgsb", "adminGSB", "mdpGSB");
+        laConnection = Connexion.getConnect("127.0.0.1", "bdgsb", "adminGSB", "mdpGSB");
     }
     
     /**
@@ -34,18 +34,19 @@ public class VisiteurMySQL {
      */
     public String[] rechercherVisiteur(String utilisateur, String mdp) {
         // ArrayList<String> informations = new ArrayList<String>();
-        String[] informations  = new String[4];
+        String[] informations  = new String[5];
         
         try {
             stmt = laConnection.createStatement();
             // Accès à la table medicament
-            result = stmt.executeQuery("SELECT * FROM PRATICIEN WHERE vIdentifiant='"+utilisateur+"' AND vMdp='"+mdp+"'");
+            result = stmt.executeQuery("SELECT * FROM VISITEUR WHERE vIdentifiant='"+utilisateur+"' AND vMdp='"+mdp+"'");
             if (result.next()) {   // Le medicament a été touvé
                 
                 informations[0] = result.getString(1);
                 informations[1] = result.getString(2);
                 informations[2] = result.getString(3);
                 informations[3] = result.getString(4);
+                informations[4] = result.getString(5);
             }
            result.close();
            stmt.close();

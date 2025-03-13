@@ -4,7 +4,12 @@
  */
 package presentation;
 
+import accesBDD.PraticienMySQL;
+import accesBDD.VisiteurMySQL;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import metier.Praticien;
 import metier.Visiteur;
 
@@ -16,6 +21,9 @@ public class JffConnexion extends javax.swing.JFrame {
     
     private Praticien lePraticien;
     private Visiteur leVisiteur;
+    private int typeUtilisateur = 0;
+    private PraticienMySQL praticiens = new PraticienMySQL();
+    private VisiteurMySQL visiteurs = new VisiteurMySQL();
     /**
      * Creates new form JffConnexion
      */
@@ -44,7 +52,7 @@ public class JffConnexion extends javax.swing.JFrame {
         jLMail = new javax.swing.JLabel();
         jLMdp = new javax.swing.JLabel();
         jTFMail = new javax.swing.JTextField();
-        jTFMdp = new javax.swing.JTextField();
+        jPFMdp = new javax.swing.JPasswordField();
         jRBPraticien = new javax.swing.JRadioButton();
         jRBVisiteur = new javax.swing.JRadioButton();
         jLlogo = new javax.swing.JLabel();
@@ -82,20 +90,26 @@ public class JffConnexion extends javax.swing.JFrame {
         getContentPane().add(jLAuthentification, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
 
         jLMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/utilisateur.png"))); // NOI18N
-        jLMail.setText("Adresse mail :");
+        jLMail.setText("Identifiant :");
         getContentPane().add(jLMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
         jLMdp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/key.png"))); // NOI18N
         jLMdp.setText("Mot de passe :");
         getContentPane().add(jLMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
 
-        jTFMail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFMailActionPerformed(evt);
+        jTFMail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFMailKeyPressed(evt);
             }
         });
         getContentPane().add(jTFMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 200, -1));
-        getContentPane().add(jTFMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 200, -1));
+
+        jPFMdp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPFMdpKeyPressed(evt);
+            }
+        });
+        getContentPane().add(jPFMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 200, -1));
 
         jRBPraticien.setText("Praticien");
         jRBPraticien.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +138,39 @@ public class JffConnexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtValiderActionPerformed
+        String identifiant = jTFMail.getText();
+        String mdp = String.valueOf(jPFMdp.getPassword());
+        Icon icone;
         
+        String[] connexion;
+        
+        switch (this.typeUtilisateur) {
+            case 1:
+                connexion = praticiens.rechercherPraticien(identifiant, mdp);
+                System.out.println("1");
+                System.out.println(this.typeUtilisateur);
+                break;
+            case 2:
+                connexion = visiteurs.rechercherVisiteur(identifiant, mdp);
+                System.out.println("2");
+                System.out.println(this.typeUtilisateur);
+                break;
+            default:
+                connexion = null;
+                System.out.println("0");
+                System.out.println(this.typeUtilisateur);
+                break;
+        }
+        
+        if (connexion[0] != null) {
+            System.out.println("Valide");
+            icone = new javax.swing.ImageIcon(getClass().getResource("/images/valider.png"));
+            JOptionPane.showMessageDialog(null, "Authentification réussie !", "Résultat d'authentification", JOptionPane.OK_OPTION, icone);
+        } else {
+            System.out.println("Invalide");
+            icone = new javax.swing.ImageIcon(getClass().getResource("/images/quitter.png"));
+            JOptionPane.showMessageDialog(null, "Erreur d'authentification, vérifiez vos identifiants !", "Résultat d'authentification", ERROR_MESSAGE, icone);
+        }
     }//GEN-LAST:event_jBtValiderActionPerformed
 
     private void jBtQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtQuitterActionPerformed
@@ -133,15 +179,29 @@ public class JffConnexion extends javax.swing.JFrame {
 
     private void jRBPraticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBPraticienActionPerformed
         jRBPraticien.setSelected(true);
+        this.typeUtilisateur = 1;
     }//GEN-LAST:event_jRBPraticienActionPerformed
 
     private void jRBVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBVisiteurActionPerformed
-        jRBVisiteur.setSelected(true);       
+        jRBVisiteur.setSelected(true);
+        this.typeUtilisateur = 2;
     }//GEN-LAST:event_jRBVisiteurActionPerformed
 
-    private void jTFMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFMailActionPerformed
+    private void jPFMdpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPFMdpKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTFMailActionPerformed
+        if (evt.getKeyCode() == 10) {
+            
+            jBtValider.doClick();
+        }
+    }//GEN-LAST:event_jPFMdpKeyPressed
+
+    private void jTFMailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFMailKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            
+            jPFMdp.requestFocus();
+        }
+    }//GEN-LAST:event_jTFMailKeyPressed
 
     /**
      * @param args the command line arguments
@@ -188,9 +248,9 @@ public class JffConnexion extends javax.swing.JFrame {
     private javax.swing.JLabel jLMail;
     private javax.swing.JLabel jLMdp;
     private javax.swing.JLabel jLlogo;
+    private javax.swing.JPasswordField jPFMdp;
     private javax.swing.JRadioButton jRBPraticien;
     private javax.swing.JRadioButton jRBVisiteur;
     private javax.swing.JTextField jTFMail;
-    private javax.swing.JTextField jTFMdp;
     // End of variables declaration//GEN-END:variables
 }

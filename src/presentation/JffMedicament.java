@@ -6,18 +6,21 @@ package presentation;
 
 import accesBDD.AvisMySQL;
 import accesBDD.MedicamentMySQL;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import metier.Catalogue;
+import metier.Medicament;
 
 /**
  *
  * @author mohamed.boussemaha
  */
 public class JffMedicament extends javax.swing.JFrame {        
+    
+    private Catalogue catalogue;
     /**
      * Creates new form JffMedicament
      */
@@ -25,8 +28,30 @@ public class JffMedicament extends javax.swing.JFrame {
         // fond blanc
         getContentPane().setBackground(new java.awt.Color(255, 255, 255));
         initComponents();
+        catalogue = new Catalogue();
+        initialiserTableauMedicaments();
     }
- 
+    
+    private void initialiserTableauMedicaments() {
+    // Récupérer la liste des médicaments à partir du catalogue
+    ArrayList<Medicament> medicaments = catalogue.getLesMedicaments();
+    
+    // Obtenir le modèle de tableau pour y ajouter les lignes
+    DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
+    
+    // Vider le tableau avant de le remplir avec les nouveaux médicaments
+    model.setRowCount(0);
+    
+    // Parcourir la liste des médicaments et ajouter chaque médicament dans le tableau
+    for (Medicament medicament : medicaments) {
+        model.addRow(new Object[] {
+            medicament.getType(),    // Type
+            medicament.getNom(),     // Nom
+            medicament.getPrix()     // Prix
+        });
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,36 +184,42 @@ public class JffMedicament extends javax.swing.JFrame {
     }//GEN-LAST:event_jTBRechercherActionPerformed
 
     private void jTFBarreRechercheKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBarreRechercheKeyReleased
-    // Récupérer le texte saisi dans la barre de recherche
-    String Recherche = jTFBarreRecherche.getText().trim();
+ // Récupérer le texte saisi dans la barre de recherche
+    String recherche = jTFBarreRecherche.getText().trim().toLowerCase();
     
     // Vérifie si la recherche n'est pas vide
-    if (!Recherche.isEmpty()) {
-        // Crée une instance de MedicamentMySQL pour la base de données
-        MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
+    if (!recherche.isEmpty()) {
+        // Créer une instance de MedicamentMySQL et obtenir la liste des médicaments
+        ArrayList<Medicament> medicaments = catalogue.getLesMedicaments();
         
-        // Appele la méthode rechercherMedicament
-        String[] medicamentData = medicamentMySQL.rechercherMedicament(Recherche);
+        // Créer un modèle de tableau
+        DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
         
-        // Si un médicament a été trouvé, mettre à jour la table
-        if (medicamentData[0] != null) {
-            DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
-            model.setRowCount(0);
-            
-            // Ajouter les données récupérées dans la table
-            model.addRow(new Object[]{
-                medicamentData[1], // Type
-                medicamentData[2], // Nom
-                medicamentData[3]  // Prix
-            });
-        } else {
-            // Si aucun médicament n'a été trouvé, afficher un message à l'utilisateur
+        // Vider le tableau avant de le remplir avec les résultats de la recherche
+        model.setRowCount(0);
+
+        // Filtrer les médicaments en fonction de la recherche
+        for (Medicament medicament : medicaments) {
+            // Vérifie si le type, le nom ou le prix correspond au texte de la recherche
+            if (medicament.getType().toLowerCase().contains(recherche) ||
+                medicament.getNom().toLowerCase().contains(recherche) ||
+                String.valueOf(medicament.getPrix()).contains(recherche)) {
+                // Ajouter la ligne correspondante au modèle de tableau
+                model.addRow(new Object[]{
+                    medicament.getType(),
+                    medicament.getNom(),
+                    medicament.getPrix()
+                });
+            }
+        }
+        
+        // Si aucun médicament ne correspond à la recherche, afficher un message
+        if (model.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Aucun médicament trouvé.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
-        // Si la barre de recherche est vide, réinitialiser le tableau
-        DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
-        model.setRowCount(0);
+        // Si la barre de recherche est vide, réinitialiser le tableau avec tous les médicaments
+        initialiserTableauMedicaments(); // Cette méthode est déjà définie pour afficher tous les médicaments
     }
     }//GEN-LAST:event_jTFBarreRechercheKeyReleased
 
@@ -196,7 +227,7 @@ public class JffMedicament extends javax.swing.JFrame {
     int selectedRow = jTableMedicament.getSelectedRow();
     if (selectedRow != -1) {
         // Récupére le nom du médicament sélectionner
-        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1);
+        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 2);
         
         // Crée une instance de AvisMySQL pour récuperer les avis
         AvisMySQL avisMySQL = new AvisMySQL();

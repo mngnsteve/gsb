@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author mohamed.boussemaha
  */
 public class Medicament {
-    private int id;
+    private String id;
     private String nom;
     private String type;
     private String composition;
@@ -26,7 +26,7 @@ public class Medicament {
      * @param composition
      * @param prix
      */
-    public Medicament(int id, String type, String nom, String composition, float prix) {
+    public Medicament(String id, String type, String nom, String composition, float prix) {
         this.id = id;
         this.type = type;
         this.nom = nom;
@@ -36,11 +36,11 @@ public class Medicament {
     
     //*****Getter et setter*****
     
-    public int getId() {
+    public String getId() {
         return id;
     }
     
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     
@@ -78,16 +78,6 @@ public class Medicament {
     
     //*****Méthodes*****
     
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + Objects.hashCode(this.nom);
-        hash = 67 * hash + Objects.hashCode(this.type);
-        hash = 67 * hash + Objects.hashCode(this.composition);
-        hash = 67 * hash + Float.floatToIntBits(this.prix);
-        return hash;
-    }
     
     /**
      * Méthodes
@@ -106,7 +96,7 @@ public class Medicament {
             return false;
         }
         final Medicament other = (Medicament) obj;
-        if (this.id != other.id) {
+        if (this.id.equals(other.id)) {
             return false;
         }
         if (Float.floatToIntBits(this.prix) != Float.floatToIntBits(other.prix)) {

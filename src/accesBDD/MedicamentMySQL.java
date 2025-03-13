@@ -78,7 +78,7 @@ public class MedicamentMySQL {
             while (result.next()) {
                 float prix = result.getString(6) == null ? 0f : Float.parseFloat(result.getString(6)); 
                 Medicament medicament = new Medicament(
-                        Integer.parseInt(result.getString(1)),
+                        result.getString(1),
                         result.getString(9),
                         result.getString(2),
                         result.getString(3),

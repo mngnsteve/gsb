@@ -6,6 +6,7 @@
 package tests;
 import accesBDD.Connexion;
 import accesBDD.MedicamentMySQL;
+import accesBDD.PraticienMySQL;
 import java.sql.Connection;
 
 /**
@@ -16,12 +17,12 @@ public class BDD {
     
     public static void main (String[] args) {
         // Connection connexion = Connexion.getConnect("10.121.38.66", "bdgsb","adminGSB", "mdpGSB ");
-        MedicamentMySQL medicament = new MedicamentMySQL();
+        PraticienMySQL praticiens = new PraticienMySQL();
         
-        String[] infos = medicament.rechercherMedicament("TRIMYCINE");
+        String[] infos = praticiens.rechercherPraticien("c.morel", "mdp1");
         
         for (int i = 0; i < infos.length; i++) {
-            System.out.println(infos[i]);
+            System.out.println("["+i+"] "+infos[i]);
         }
     }
 }

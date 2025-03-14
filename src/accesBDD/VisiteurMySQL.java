@@ -29,6 +29,8 @@ public class VisiteurMySQL {
     
     /**
      * Permet de rechercher le medicament avec son nom
+     * @param utilisateur
+     * @param mdp
      * @param nom     :  nom du médicament
      * @return String   :  prénom et nom du client s'il existe,chaine vide sinon
      */

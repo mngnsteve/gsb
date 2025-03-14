@@ -166,6 +166,9 @@ public class JffConnexion extends javax.swing.JFrame {
             System.out.println("Valide");
             icone = new javax.swing.ImageIcon(getClass().getResource("/images/valider.png"));
             JOptionPane.showMessageDialog(null, "Authentification réussie !", "Résultat d'authentification", JOptionPane.OK_OPTION, icone);
+            JffMedicament catalogue = new JffMedicament(connexion, this.typeUtilisateur);
+            catalogue.setVisible(true);
+            dispose();
         } else {
             System.out.println("Invalide");
             icone = new javax.swing.ImageIcon(getClass().getResource("/images/quitter.png"));

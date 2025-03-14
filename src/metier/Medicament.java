@@ -78,6 +78,20 @@ public class Medicament {
     
     //*****Méthodes*****
     
+    public String getInformation() {
+        String str = "";
+        str += "Id : ";
+        str += this.id;
+        str += "\nNom : ";
+        str += this.nom;
+        str += "\nType : ";
+        str += this.type;
+        str += "\nComposition : ";
+        str += this.composition;
+        str += "\nPrix : ";
+        str += this.prix;
+        return str;
+    }
     
     /**
      * Méthodes

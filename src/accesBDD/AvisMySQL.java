@@ -40,7 +40,7 @@ public class AvisMySQL {
         try {
             stmt = laConnection.createStatement();
             // Accès à la table medicament
-            result = stmt.executeQuery("SELECT * FROM AVIS WHERE mDepotLegal='"+medicament+"'");
+            result = stmt.executeQuery("SELECT * FROM AVIS WHERE mDepotLegal='"+medicament+"';");
             
             while (result.next()) {
                 informations[0] = result.getString(1);
@@ -69,7 +69,6 @@ public class AvisMySQL {
             
             update = stmt.executeUpdate("INSERT INTO AVIS (mDepotLegal, aAuteur, aContenu, aDate) VALUES ('"+depotLegal+"', '"+auteur+"', '"+contenu+"', CURRENT_DATE)");
             
-           result.close();
            stmt.close();
         } catch (SQLException ex) {
               System.out.println("SQLException : " + ex.getMessage());

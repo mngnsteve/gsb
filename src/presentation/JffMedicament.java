@@ -6,8 +6,11 @@ package presentation;
 
 import accesBDD.AvisMySQL;
 import accesBDD.MedicamentMySQL;
+import accesBDD.PraticienMySQL;
+import accesBDD.VisiteurMySQL;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -21,8 +24,11 @@ import metier.Medicament;
 public class JffMedicament extends javax.swing.JFrame {        
     
     private final Catalogue catalogue;
+    private Medicament medicament;
+    private String[] connexion = null;
+    private AvisMySQL avis = new AvisMySQL();
+    
     /**
-     * Creates new form JffMedicament
      */
     public JffMedicament() {
         // fond blanc
@@ -32,12 +38,34 @@ public class JffMedicament extends javax.swing.JFrame {
         initialiserTableauMedicaments();
         MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
         ArrayList<String> familles = medicamentMySQL.obtenirFamilles();
-    
         for (String famille : familles) {
             jCBType.addItem(famille);
         }
     }
     
+    /**
+     * 
+     * @param connexion
+     * @param typeUtilisateur
+     */
+    public JffMedicament(String[] connexion, int typeUtilisateur) {
+        // fond blanc
+        getContentPane().setBackground(new java.awt.Color(255, 255, 255));
+        initComponents();
+        catalogue = new Catalogue();
+        initialiserTableauMedicaments();
+        MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
+        ArrayList<String> familles = medicamentMySQL.obtenirFamilles();
+        for (String famille : familles) {
+            jCBType.addItem(famille);
+        }
+        this.connexion = connexion;
+        
+        if(typeUtilisateur == 2) {
+            jBAvis.setVisible(false);
+        } 
+    }
+        
     private void initialiserTableauMedicaments() {
     // Récupére la liste des médicaments à partir du catalogue
     ArrayList<Medicament> medicaments = catalogue.getLesMedicaments();
@@ -45,17 +73,16 @@ public class JffMedicament extends javax.swing.JFrame {
     // Modèle de tableau pour y ajouter les lignes
     DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
     
-    // Vider le tableau avant de le remplir avec les nouveaux médicaments
     model.setRowCount(0);
     
-    // Parcourir la liste des médicaments et ajouter chaque médicament dans le tableau
+    // Parcoure la liste des médicaments et ajouter chaque médicament dans le tableau
     for (Medicament medicament : medicaments) {
         model.addRow(new Object[] {
             medicament.getType(),
             medicament.getNom(),
             medicament.getPrix()
         });
-    }
+    }  
 }
 
     /**
@@ -77,7 +104,6 @@ public class JffMedicament extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jTFBarreRecherche = new javax.swing.JTextField();
         jTBRechercher = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Médicament");
@@ -114,6 +140,11 @@ public class JffMedicament extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableMedicament.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMedicamentMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableMedicament);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 450, 320));
@@ -142,7 +173,7 @@ public class JffMedicament extends javax.swing.JFrame {
                 jCBTypeActionPerformed(evt);
             }
         });
-        getContentPane().add(jCBType, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 200, 30));
+        getContentPane().add(jCBType, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 320, 30));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -155,7 +186,7 @@ public class JffMedicament extends javax.swing.JFrame {
                 jTFBarreRechercheKeyReleased(evt);
             }
         });
-        getContentPane().add(jTFBarreRecherche, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 200, 30));
+        getContentPane().add(jTFBarreRecherche, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 200, 30));
 
         jTBRechercher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rechercher.png"))); // NOI18N
         jTBRechercher.setText("Rechercher");
@@ -164,17 +195,22 @@ public class JffMedicament extends javax.swing.JFrame {
                 jTBRechercherActionPerformed(evt);
             }
         });
-        getContentPane().add(jTBRechercher, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, -1, 30));
-
-        jLabel1.setText("Type :");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        getContentPane().add(jTBRechercher, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, -1, 30));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvisActionPerformed
-        
+        String reponse = "";
+        do {
+            reponse = (String) JOptionPane.showInputDialog(null, "Donnez un avis", "Avis", QUESTION_MESSAGE, null, null, null);
+ 
+        } while (reponse==null);
+        if(connexion!=null) {
+            int auteur = Integer.parseInt(this.connexion[0]);
+            avis.envoyerAvis(medicament.getId(), auteur, reponse);
+        }
     }//GEN-LAST:event_jBAvisActionPerformed
 
     private void jCBTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTypeActionPerformed
@@ -218,22 +254,18 @@ public class JffMedicament extends javax.swing.JFrame {
     
     // Vérifie si la recherche n'est pas vide
     if (!recherche.isEmpty()) {
-        // Créer une instance de MedicamentMySQL et obtenir la liste des médicaments
+        // Instance de MedicamentMySQL et obtenir la liste des médicaments
         ArrayList<Medicament> medicaments = catalogue.getLesMedicaments();
         
-        // Créer un modèle de tableau
         DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
         
-        // Vider le tableau avant de le remplir avec les résultats de la recherche
         model.setRowCount(0);
 
-        // Filtrer les médicaments en fonction de la recherche
         for (Medicament medicament : medicaments) {
             // Vérifie si le type, le nom ou le prix correspond au texte de la recherche
             if (medicament.getType().toLowerCase().contains(recherche) ||
                 medicament.getNom().toLowerCase().contains(recherche) ||
                 String.valueOf(medicament.getPrix()).contains(recherche)) {
-                // Ajouter la ligne correspondante au modèle de tableau
                 model.addRow(new Object[]{
                     medicament.getType(),
                     medicament.getNom(),
@@ -242,13 +274,11 @@ public class JffMedicament extends javax.swing.JFrame {
             }
         }
         
-        // Si aucun médicament ne correspond à la recherche, afficher un message
         if (model.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Aucun médicament trouvé.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
-        // Si la barre de recherche est vide, réinitialiser le tableau avec tous les médicaments
-        initialiserTableauMedicaments(); // Cette méthode est déjà définie pour afficher tous les médicaments
+        initialiserTableauMedicaments();
     }
     }//GEN-LAST:event_jTFBarreRechercheKeyReleased
 
@@ -256,9 +286,8 @@ public class JffMedicament extends javax.swing.JFrame {
     int selectedRow = jTableMedicament.getSelectedRow();
     if (selectedRow != -1) {
         // Récupère le nom du médicament sélectionner
-        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1); // Corrected column index for "Nom"
+        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1);
         
-        // Crée une instance de AvisMySQL pour récupérer les avis
         AvisMySQL avisMySQL = new AvisMySQL();
         
         // Appelle la méthode pour obtenir les avis du médicament sélectionné
@@ -275,7 +304,6 @@ public class JffMedicament extends javax.swing.JFrame {
                 commentaires.append("Commentaire: ").append(avis[2]).append("\n\n");
             }
             
-            // Afficher les commentaires dans une boîte de dialogue
             JOptionPane.showMessageDialog(this, commentaires.toString(), 
                                           "Commentaires pour " + nomMedicament, 
                                           JOptionPane.INFORMATION_MESSAGE);
@@ -288,6 +316,13 @@ public class JffMedicament extends javax.swing.JFrame {
                                       "Erreur", JOptionPane.WARNING_MESSAGE);
     }
     }//GEN-LAST:event_jBVoirAvisActionPerformed
+
+    private void jTableMedicamentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMedicamentMouseClicked
+        int indice = jTableMedicament.getSelectedRow();
+        System.out.println(indice + "Médicament cliqué");
+        medicament = catalogue.getLesMedicaments().get(indice);
+        jTextArea1.setText(medicament.getInformation());
+    }//GEN-LAST:event_jTableMedicamentMouseClicked
 
     /**
      * @param args the command line arguments
@@ -328,7 +363,6 @@ public class JffMedicament extends javax.swing.JFrame {
     private javax.swing.JButton jBAvis;
     private javax.swing.JButton jBVoirAvis;
     private javax.swing.JComboBox<String> jCBType;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLlogo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

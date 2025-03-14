@@ -20,7 +20,7 @@ import metier.Medicament;
  */
 public class JffMedicament extends javax.swing.JFrame {        
     
-    private Catalogue catalogue;
+    private final Catalogue catalogue;
     /**
      * Creates new form JffMedicament
      */
@@ -30,13 +30,19 @@ public class JffMedicament extends javax.swing.JFrame {
         initComponents();
         catalogue = new Catalogue();
         initialiserTableauMedicaments();
+        MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
+        ArrayList<String> familles = medicamentMySQL.obtenirFamilles();
+    
+        for (String famille : familles) {
+            jCBType.addItem(famille);
+        }
     }
     
     private void initialiserTableauMedicaments() {
-    // Récupérer la liste des médicaments à partir du catalogue
+    // Récupére la liste des médicaments à partir du catalogue
     ArrayList<Medicament> medicaments = catalogue.getLesMedicaments();
     
-    // Obtenir le modèle de tableau pour y ajouter les lignes
+    // Modèle de tableau pour y ajouter les lignes
     DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
     
     // Vider le tableau avant de le remplir avec les nouveaux médicaments
@@ -45,9 +51,9 @@ public class JffMedicament extends javax.swing.JFrame {
     // Parcourir la liste des médicaments et ajouter chaque médicament dans le tableau
     for (Medicament medicament : medicaments) {
         model.addRow(new Object[] {
-            medicament.getType(),    // Type
-            medicament.getNom(),     // Nom
-            medicament.getPrix()     // Prix
+            medicament.getType(),
+            medicament.getNom(),
+            medicament.getPrix()
         });
     }
 }
@@ -130,7 +136,7 @@ public class JffMedicament extends javax.swing.JFrame {
         });
         getContentPane().add(jBVoirAvis, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, -1, -1));
 
-        jCBType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choisir un type" }));
         jCBType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBTypeActionPerformed(evt);
@@ -168,11 +174,34 @@ public class JffMedicament extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvisActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jBAvisActionPerformed
 
     private void jCBTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTypeActionPerformed
-        // TODO add your handling code here:
+    String typeSelectionne = (String) jCBType.getSelectedItem();
+    
+    // Récupére la liste des médicaments depuis la base de données
+    MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
+    ArrayList<Medicament> medicaments = medicamentMySQL.obtenirMedicaments();
+    
+    // Filtre les médicaments par type sélectionné
+    ArrayList<Medicament> medicamentsFiltres = new ArrayList<>();
+    for (Medicament medicament : medicaments) {
+        if (medicament.getType().equals(typeSelectionne)) {
+            medicamentsFiltres.add(medicament);
+        }
+    }
+    
+    // Met à jour le tableau avec les médicaments filtrés
+    DefaultTableModel model = (DefaultTableModel) jTableMedicament.getModel();
+    model.setRowCount(0);
+    for (Medicament medicament : medicamentsFiltres) {
+        model.addRow(new Object[] {
+            medicament.getType(),
+            medicament.getNom(),
+            medicament.getPrix()
+        });
+    }
     }//GEN-LAST:event_jCBTypeActionPerformed
 
     private void jTBRechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBRechercherActionPerformed
@@ -226,20 +255,20 @@ public class JffMedicament extends javax.swing.JFrame {
     private void jBVoirAvisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoirAvisActionPerformed
     int selectedRow = jTableMedicament.getSelectedRow();
     if (selectedRow != -1) {
-        // Récupére le nom du médicament sélectionner
-        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 2);
+        // Récupère le nom du médicament sélectionner
+        String nomMedicament = (String) jTableMedicament.getValueAt(selectedRow, 1); // Corrected column index for "Nom"
         
-        // Crée une instance de AvisMySQL pour récuperer les avis
+        // Crée une instance de AvisMySQL pour récupérer les avis
         AvisMySQL avisMySQL = new AvisMySQL();
         
-        // Appele la méthode pour obtenir les avis du médicament sélectionné
+        // Appelle la méthode pour obtenir les avis du médicament sélectionné
         ArrayList<String[]> avisList = avisMySQL.obtenirAvis(nomMedicament);
         
         // Affiche les avis dans une popup
         if (avisList.size() > 0) {
             StringBuilder commentaires = new StringBuilder();
             
-            // Parcoure la liste des avis et ajoute chaque commentaire au texte
+            // Parcours la liste des avis et ajoute chaque commentaire au texte
             for (String[] avis : avisList) {
                 commentaires.append("Auteur: ").append(avis[1]).append("\n");
                 commentaires.append("Date: ").append(avis[3]).append("\n");

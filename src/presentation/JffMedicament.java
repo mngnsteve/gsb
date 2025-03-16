@@ -63,6 +63,10 @@ public class JffMedicament extends javax.swing.JFrame {
         initComponents();
         // Initialisation du tableau de médicaments
         initialiserTableauMedicaments();
+        // Données de connexion
+        this.connexion = connexion;
+        
+        this.setTitle("Galaxy Swiss Bourdin - Catalogue ("+this.connexion[2]+" "+this.connexion[1]+")");
         
         // Initialisation de la liste déroulante
         MedicamentMySQL medicamentMySQL = new MedicamentMySQL();
@@ -71,8 +75,7 @@ public class JffMedicament extends javax.swing.JFrame {
             jCBType.addItem(famille);
         }
         
-        // Données de connexion
-        this.connexion = connexion;
+        
         
         if(typeUtilisateur == 2) { // L'utilisateur est un visiteur
             // Saisie d'avis désactivée

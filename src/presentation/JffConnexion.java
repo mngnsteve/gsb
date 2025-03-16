@@ -61,7 +61,7 @@ public class JffConnexion extends javax.swing.JFrame {
         jLFond = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CONNEXION");
+        setTitle("Galaxy Swiss Bourdin - Authentification");
         setForeground(java.awt.Color.white);
         setResizable(false);
         setSize(new java.awt.Dimension(570, 400));

@@ -6,7 +6,11 @@ package presentation;
 
 import accesBDD.PraticienMySQL;
 import accesBDD.VisiteurMySQL;
+import java.awt.Desktop;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -48,6 +52,7 @@ public class JffConnexion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jBtValider = new javax.swing.JButton();
         jBtQuitter = new javax.swing.JButton();
         jLAuthentification = new javax.swing.JLabel();
@@ -59,6 +64,11 @@ public class JffConnexion extends javax.swing.JFrame {
         jRBVisiteur = new javax.swing.JRadioButton();
         jLlogo = new javax.swing.JLabel();
         jLFond = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMAide = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.getAccessibleContext().setAccessibleParent(jMenuBar1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Galaxy Swiss Bourdin - Authentification");
@@ -133,6 +143,19 @@ public class JffConnexion extends javax.swing.JFrame {
 
         jLFond.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondClair.png"))); // NOI18N
         getContentPane().add(jLFond, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 435, 222));
+
+        jMenuBar1.setAutoscrolls(true);
+        jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jMAide.setText("Guide utilisateur");
+        jMAide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMAideMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMAide);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -242,6 +265,16 @@ public class JffConnexion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTFIdentifiantKeyPressed
 
+    private void jMAideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMAideMouseClicked
+        // TODO add your handling code here:
+        try {
+            Desktop.getDesktop().browse(new URI("http://192.168.1.179/wiki/doku.php?id=manuel"));
+        } catch (IOException | URISyntaxException e) 
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMAideMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -287,6 +320,9 @@ public class JffConnexion extends javax.swing.JFrame {
     private javax.swing.JLabel jLIdentifiant;
     private javax.swing.JLabel jLMdp;
     private javax.swing.JLabel jLlogo;
+    private javax.swing.JMenu jMAide;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPasswordField jPFMdp;
     private javax.swing.JRadioButton jRBPraticien;
     private javax.swing.JRadioButton jRBVisiteur;

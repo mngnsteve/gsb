@@ -8,8 +8,12 @@ import accesBDD.AvisMySQL;
 import accesBDD.MedicamentMySQL;
 import accesBDD.PraticienMySQL;
 import accesBDD.VisiteurMySQL;
+import java.awt.Desktop;
 import java.awt.Image;
 import static java.awt.Image.SCALE_DEFAULT;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -151,6 +155,8 @@ public class JffMedicament extends javax.swing.JFrame {
         jLRecherche = new javax.swing.JLabel();
         jPMedicament = new javax.swing.JPanel();
         jLMedicament = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMAide = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CATALOGUE");
@@ -247,6 +253,19 @@ public class JffMedicament extends javax.swing.JFrame {
         jPMedicament.add(jLMedicament, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -10, 260, 200));
 
         getContentPane().add(jPMedicament, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 280, 180));
+
+        jMenuBar1.setAutoscrolls(true);
+        jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jMAide.setText("Guide utilisateur");
+        jMAide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMAideMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMAide);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -415,6 +434,16 @@ public class JffMedicament extends javax.swing.JFrame {
         initialiserTableauMedicaments();
     }//GEN-LAST:event_jTFBarreRechercheKeyReleased
 
+    private void jMAideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMAideMouseClicked
+        // TODO add your handling code here:
+        try {
+            Desktop.getDesktop().browse(new URI("http://192.168.1.179/wiki/doku.php?id=manuel"));
+        } catch (IOException | URISyntaxException e) 
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMAideMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -457,6 +486,8 @@ public class JffMedicament extends javax.swing.JFrame {
     private javax.swing.JLabel jLMedicament;
     private javax.swing.JLabel jLRecherche;
     private javax.swing.JLabel jLlogo;
+    private javax.swing.JMenu jMAide;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPMedicament;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

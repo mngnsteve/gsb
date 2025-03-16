@@ -29,7 +29,7 @@ public class Visiteur {
     
     /**
      * Obtenir le numéro du visiteur
-     * @return String : Numéro du visiteur
+     * @return int : Numéro du visiteur
      */
     public int getId() {
         return id;

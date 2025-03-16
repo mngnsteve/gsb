@@ -29,7 +29,7 @@ public class Praticien {
     
     /**
      * Obtenir le numéro du praticien
-     * @return String : Numéro du praticien
+     * @return int : Numéro du praticien
      */
     public int getId() {
         return id;

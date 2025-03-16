@@ -51,9 +51,9 @@ public class JffConnexion extends javax.swing.JFrame {
         jBtValider = new javax.swing.JButton();
         jBtQuitter = new javax.swing.JButton();
         jLAuthentification = new javax.swing.JLabel();
-        jLMail = new javax.swing.JLabel();
+        jLIdentifiant = new javax.swing.JLabel();
         jLMdp = new javax.swing.JLabel();
-        jTFMail = new javax.swing.JTextField();
+        jTFIdentifiant = new javax.swing.JTextField();
         jPFMdp = new javax.swing.JPasswordField();
         jRBPraticien = new javax.swing.JRadioButton();
         jRBVisiteur = new javax.swing.JRadioButton();
@@ -90,20 +90,20 @@ public class JffConnexion extends javax.swing.JFrame {
         jLAuthentification.setText("Authentification");
         getContentPane().add(jLAuthentification, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
 
-        jLMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/utilisateur.png"))); // NOI18N
-        jLMail.setText("Identifiant :");
-        getContentPane().add(jLMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
+        jLIdentifiant.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/utilisateur.png"))); // NOI18N
+        jLIdentifiant.setText("Identifiant :");
+        getContentPane().add(jLIdentifiant, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
         jLMdp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/key.png"))); // NOI18N
         jLMdp.setText("Mot de passe :");
         getContentPane().add(jLMdp, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
 
-        jTFMail.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTFIdentifiant.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTFMailKeyPressed(evt);
+                jTFIdentifiantKeyPressed(evt);
             }
         });
-        getContentPane().add(jTFMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 200, -1));
+        getContentPane().add(jTFIdentifiant, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 200, -1));
 
         jPFMdp.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -144,7 +144,7 @@ public class JffConnexion extends javax.swing.JFrame {
      */
     private void jBtValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtValiderActionPerformed
         // Récupération de l'identifiant dans le champ de saisi "Identifiant"
-        String identifiant = jTFMail.getText();
+        String identifiant = jTFIdentifiant.getText();
         // Récupération du mot de passe dans le champ de saisi du mot de passe
         String mdp = String.valueOf(jPFMdp.getPassword()); 
         Icon icone;
@@ -233,14 +233,14 @@ public class JffConnexion extends javax.swing.JFrame {
      * Action effectuée lorsque l'utilisateur presse la touche "Entrée" de son clavier pendant la saisie de l'identifiant
      * @param evt L'événement d'action déclenché par la pression sur la touche "Entrée" du clavier
      */
-    private void jTFMailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFMailKeyPressed
+    private void jTFIdentifiantKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFIdentifiantKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // La touche pressée est la touche "Entrée"
             
             // On déplace le focus de la saisie de l'identifiant à la saisie du mot de passe
             jPFMdp.requestFocus();
         }
-    }//GEN-LAST:event_jTFMailKeyPressed
+    }//GEN-LAST:event_jTFIdentifiantKeyPressed
 
     /**
      * @param args the command line arguments
@@ -284,12 +284,12 @@ public class JffConnexion extends javax.swing.JFrame {
     private javax.swing.JButton jBtValider;
     private javax.swing.JLabel jLAuthentification;
     private javax.swing.JLabel jLFond;
-    private javax.swing.JLabel jLMail;
+    private javax.swing.JLabel jLIdentifiant;
     private javax.swing.JLabel jLMdp;
     private javax.swing.JLabel jLlogo;
     private javax.swing.JPasswordField jPFMdp;
     private javax.swing.JRadioButton jRBPraticien;
     private javax.swing.JRadioButton jRBVisiteur;
-    private javax.swing.JTextField jTFMail;
+    private javax.swing.JTextField jTFIdentifiant;
     // End of variables declaration//GEN-END:variables
 }

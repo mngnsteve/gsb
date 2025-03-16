@@ -238,7 +238,7 @@ public class JffMedicament extends javax.swing.JFrame {
         getContentPane().add(jTFBarreRecherche, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 200, 30));
         jTFBarreRecherche.getAccessibleContext().setAccessibleName("");
 
-        jLRecherche.setText("Recherche par nom :");
+        jLRecherche.setText("Recherche :");
         getContentPane().add(jLRecherche, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 200, -1));
 
         jPMedicament.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

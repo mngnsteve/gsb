@@ -29,91 +29,86 @@ public class MedicamentMySQL {
      * Constructeur
      * Etablissement d'une connexion avec la base de données
      */
-    // 10.121.38.66
     public MedicamentMySQL() {
-        laConnection = Connexion.getConnect("10.121.38.66", "bdgsb", "adminGSB", "mdpGSB");
+        laConnection = Connexion.getConnect("127.0.0.1", "bdgsb", "adminGSB", "mdpGSB");
     }
     
     /**
-     * Permet de rechercher le medicament avec son nom
-     * @param nom     :  nom du médicament
-     * @return String   :  prénom et nom du client s'il existe,chaine vide sinon
-     */
-    public String[] rechercherMedicament(String nom) {
-        // ArrayList<String> informations = new ArrayList<String>();
-        String[] informations  = new String[7];
-        
-        try {
-            stmt = laConnection.createStatement();
-            // Accès à la table medicament
-            result = stmt.executeQuery("SELECT * FROM MEDICAMENT WHERE mNomCommercial='"+nom+"'");
-            if (result.next()) {   // Le medicament a été touvé
-                
-                informations[0] = result.getString(1);
-                informations[1] = result.getString(2);
-                informations[2] = result.getString(3);
-                informations[3] = result.getString(4);
-                informations[4] = result.getString(5);
-                informations[5] = result.getString(6);
-                informations[6] = result.getString(7);
-            }
-           result.close();
-           stmt.close();
-        } catch (SQLException ex) {
-              System.out.println("SQLException : " + ex.getMessage());
-              System.out.println("SQLState : " + ex.getSQLState());
-              System.out.println("Code erreur : " + ex.getErrorCode());  
-        }
-         return informations;
-    }
-    
+    * Récupère la liste de tous les médicaments disponibles dans la base de données
+    * en joignant les informations de la table MEDICAMENT avec celles de la table FAMILLE
+    * @return ArrayList<Medicament> : Une liste d'objets Medicament contenant les informations des médicaments
+    */
     public ArrayList<Medicament> obtenirMedicaments() {
+        // Liste des Medicament
         ArrayList<Medicament> lesMedicaments = new ArrayList<Medicament>();
         
         try {
+            // Ouverture d'une connexion SQL
             stmt = laConnection.createStatement();
-            // Accès à la table medicament
+            
+            // Requête SQL de récupération des médicaments
             result = stmt.executeQuery("SELECT * FROM MEDICAMENT INNER JOIN FAMILLE ON FAMILLE.fCode = MEDICAMENT.fCode");
             
             while (result.next()) {
-                float prix = result.getString(6) == null ? 0f : Float.parseFloat(result.getString(6)); 
+                // Conservion en float du String de MEDICAMENT.mPrix
+                float prix = result.getString(6) == null ? 0f : Float.parseFloat(result.getString(6));
+                
                 Medicament medicament = new Medicament(
-                        result.getString(1),
-                        result.getString(9),
-                        result.getString(2),
-                        result.getString(3),
-                        prix
+                        result.getString(1), // MEDICAMENT.mDepotLegal
+                        result.getString(9), // FAMILLE.fLibelle
+                        result.getString(2), // MEDICAMENT.mNomCommercial
+                        result.getString(3), // MEDICAMENT.mComposition
+                        result.getString(4), // MEDICAMENT.mEffets
+                        result.getString(5), // MEDICAMENT.mContreIndications
+                        prix                 // MEDICAMENT.mPrix
                 );
                 
+                // Ajout du Medicament à la liste des Medicament
                 lesMedicaments.add(medicament);
             }
+            
+            // Fin de requête
            result.close();
            stmt.close();
         } catch (SQLException ex) {
+            // Retour des exceptions
               System.out.println("SQLException : " + ex.getMessage());
               System.out.println("SQLState : " + ex.getSQLState());
               System.out.println("Code erreur : " + ex.getErrorCode());  
         }
         
+        // Retour de la liste des Medicament
         return lesMedicaments;
     }
+    
+    /**
+    * Récupère la liste des noms des familles de médicaments disponibles dans la base de données
+    * @return ArrayList<String> : Une liste de chaînes de caractères contenant les noms des familles de médicaments
+    */
     public ArrayList<String> obtenirFamilles() {
+        // Liste des noms des familles de médicaments
         ArrayList<String> familles = new ArrayList<String>();
         
         try {
+            // Ouverture d'une connexion SQL
             stmt = laConnection.createStatement();
-            // Accès la table famille
+            
+            // Requête SQL de récupération des familles
             result = stmt.executeQuery("SELECT * FROM FAMILLE");
             
+            // Traitement ligne par ligne du retour de la requête
             while (result.next()) {
+                // Ajout du nom de la famille (FAMILLE.fLibelle) de médicaments à la liste des noms
                 familles.add(result.getString(2));
             }
         } catch (SQLException ex) {
+            // Retour des exceptions
             System.out.println("SQLException : " + ex.getMessage());
             System.out.println("SQLState : " + ex.getSQLState());
             System.out.println("Code erreur: " + ex.getErrorCode());
         }
         
+        // Retour de la liste des noms des familles de médicaments
         return familles;
     }
 }

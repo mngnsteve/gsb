@@ -24,43 +24,45 @@ public class PraticienMySQL {
      */
     // 10.121.38.66
     public PraticienMySQL() {
-        laConnection = Connexion.getConnect("10.121.38.66", "bdgsb", "adminGSB", "mdpGSB");
+        laConnection = Connexion.getConnect("127.0.0.1", "bdgsb", "adminGSB", "mdpGSB");
     }
     
     /**
-     * Permet de rechercher le medicament avec son nom
-     * @param identifiant     :  identifiant de l'utilisateur
-     * @param mdp             :  mot de passe de l'utilisateur
-     * @return String   :  prénom et nom du client s'il existe,chaine vide sinon
-     */
+    * Recherche un praticien dans la base de données en utilisant son identifiant et son mot de passe
+    * @param utilisateur : L'identifiant du praticien
+    * @param mdp :         Le mot de passe du praticien
+    * @return String[] : Un tableau de chaînes de caractères contenant les informations du praticien
+    */
     public String[] rechercherPraticien(String identifiant, String mdp) {
-        // ArrayList<String> informations = new ArrayList<String>();
+        // Tableau d'informations du praticien
         String[] informations  = new String[10];
         
         try {
+            // Ouverture d'une connexion SQL
             stmt = laConnection.createStatement();
-            // Accès à la table medicament
+            
+            // Requête SQL de récupération du praticien
             result = stmt.executeQuery("SELECT * FROM PRATICIEN WHERE pIdentifiant='"+identifiant+"' AND pMdp='"+mdp+"'");
-            if (result.next()) {   // Le medicament a été touvé
-                
-                informations[0] = result.getString(1);
-                informations[1] = result.getString(2);
-                informations[2] = result.getString(3);
-                informations[3] = result.getString(4);
-                informations[4] = result.getString(5);
-                informations[5] = result.getString(6);
-                informations[6] = result.getString(7);
-                informations[7] = result.getString(8);
-                informations[8] = result.getString(9);
-                informations[9] = result.getString(10);
+            
+            // Traitement de la ligne retournée
+            if (result.next()) {
+                // Informations du praticien
+                informations[0] = result.getString(1); // PRATICIEN.vNUM
+                informations[1] = result.getString(2); // PRATICIEN.vNom
+                informations[2] = result.getString(3); // PRATICIEN.vPrenom
+                informations[3] = result.getString(4); // PRATICIEN.vIdentifiant
+                informations[4] = result.getString(5); // PRATICIEN.vMdp
             }
            result.close();
            stmt.close();
         } catch (SQLException ex) {
-              System.out.println("SQLException : " + ex.getMessage());
-              System.out.println("SQLState : " + ex.getSQLState());
-              System.out.println("Code erreur : " + ex.getErrorCode());  
+            // Fin de requête
+            System.out.println("SQLException : " + ex.getMessage());
+            System.out.println("SQLState : " + ex.getSQLState());
+            System.out.println("Code erreur : " + ex.getErrorCode());  
         }
-         return informations;
+        
+        // Retour des informations du praticien
+        return informations;
     }
 }

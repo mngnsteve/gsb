@@ -6,6 +6,7 @@ package presentation;
 
 import accesBDD.PraticienMySQL;
 import accesBDD.VisiteurMySQL;
+import java.awt.event.KeyEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -24,12 +25,13 @@ public class JffConnexion extends javax.swing.JFrame {
     private int typeUtilisateur = 0;
     private PraticienMySQL praticiens = new PraticienMySQL();
     private VisiteurMySQL visiteurs = new VisiteurMySQL();
+    
     /**
-     * Creates new form JffConnexion
+     * Constructeur de la classe JffConnexion, qui est une JFrame
      */
     public JffConnexion() {
         initComponents();
-        // MISE EN PLACE D'UN FOND BLANC
+        // Mise en place d'un fond blanc
         getContentPane().setBackground(new java.awt.Color(255, 255, 255));
         // Ajout des groupes bouton praticien et visiteur
         ButtonGroup g = new ButtonGroup();
@@ -59,9 +61,8 @@ public class JffConnexion extends javax.swing.JFrame {
         jLFond = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Connexion");
+        setTitle("CONNEXION");
         setForeground(java.awt.Color.white);
-        setPreferredSize(new java.awt.Dimension(530, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(570, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -137,68 +138,106 @@ public class JffConnexion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action effectuée lorsque le l'utilisateur clique sur le bouton "Valider"
+     * @param evt L'événement d'action déclenché par le clic sur le bouton
+     */
     private void jBtValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtValiderActionPerformed
+        // Récupération de l'identifiant dans le champ de saisi "Identifiant"
         String identifiant = jTFMail.getText();
-        String mdp = String.valueOf(jPFMdp.getPassword());
+        // Récupération du mot de passe dans le champ de saisi du mot de passe
+        String mdp = String.valueOf(jPFMdp.getPassword()); 
         Icon icone;
         
+        // Tableau d'informations de la connexion utilisateur
         String[] connexion;
         
+        // les différents cas de valeur du type d'utilisateur
         switch (this.typeUtilisateur) {
-            case 1:
+            case 1: // Connexion praticien
                 connexion = praticiens.rechercherPraticien(identifiant, mdp);
-                System.out.println("1");
-                System.out.println(this.typeUtilisateur);
                 break;
-            case 2:
+            case 2: // Connexion visiteur
                 connexion = visiteurs.rechercherVisiteur(identifiant, mdp);
-                System.out.println("2");
-                System.out.println(this.typeUtilisateur);
                 break;
-            default:
+            default: // Profil non spécifié
                 connexion = null;
-                System.out.println("0");
-                System.out.println(this.typeUtilisateur);
                 break;
         }
         
-        if (connexion[0] != null) {
-            System.out.println("Valide");
+        
+        if (this.typeUtilisateur != 0 && connexion[0] != null) { // Le profil est précisé et les identifiants sont valides
             icone = new javax.swing.ImageIcon(getClass().getResource("/images/valider.png"));
+            // Affichage d'un message de confirmation de l'authentification
             JOptionPane.showMessageDialog(null, "Authentification réussie !", "Résultat d'authentification", JOptionPane.OK_OPTION, icone);
+            // Préparation de la fenêtre du catalogue de médicaments
+            JffMedicament catalogue = new JffMedicament(connexion, this.typeUtilisateur);
+            // Ouverture de la fenêtre de catalogue
+            catalogue.setVisible(true);
+            // Fermeture de la fenêtre de connexion
+            dispose();
         } else {
-            System.out.println("Invalide");
             icone = new javax.swing.ImageIcon(getClass().getResource("/images/quitter.png"));
-            JOptionPane.showMessageDialog(null, "Erreur d'authentification, vérifiez vos identifiants !", "Résultat d'authentification", ERROR_MESSAGE, icone);
+            if (this.typeUtilisateur == 0) { // Il n'y a pas de profil utilisateur spécifié
+                // Affichage d'un message d'erreur indiquant la précision du profil
+                JOptionPane.showMessageDialog(null, "Vous devez selectionner un profil de connexion !", "Résultat d'authentification", ERROR_MESSAGE, icone);
+            } else {
+                // Affichage d'un message d'erreur indiquant des problèmes d'identification
+                JOptionPane.showMessageDialog(null, "Erreur d'authentification, vérifiez vos identifiants !", "Résultat d'authentification", ERROR_MESSAGE, icone);
+            }
+            
         }
     }//GEN-LAST:event_jBtValiderActionPerformed
 
+    /**
+     * Action effectuée lorsque le l'utilisateur clique sur le bouton "Quitter"
+     * @param evt L'événement d'action déclenché par le clic sur le bouton
+     */
     private void jBtQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtQuitterActionPerformed
+        // Arrêt du système
         System.exit(0);
     }//GEN-LAST:event_jBtQuitterActionPerformed
 
+    /**
+     * Action effectuée lorsque l'utilisateur clique sur le bouton radio "Praticien"
+     * @param evt L'événement d'action déclenché par le clic sur le bouton
+     */
     private void jRBPraticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBPraticienActionPerformed
         jRBPraticien.setSelected(true);
         this.typeUtilisateur = 1;
     }//GEN-LAST:event_jRBPraticienActionPerformed
 
+    /**
+     * Action effectuée lorsque l'utilisateur clique sur le bouton radio "Visiteur"
+     * @param evt L'événement d'action déclenché par le clic sur le bouton
+     */
     private void jRBVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBVisiteurActionPerformed
         jRBVisiteur.setSelected(true);
         this.typeUtilisateur = 2;
     }//GEN-LAST:event_jRBVisiteurActionPerformed
 
+    /**
+     * Action effectuée lorsque l'utilisateur presse la touche "Entrée" de son clavier pendant la saisie du mot de passe
+     * @param evt L'événement d'action déclenché par la pression sur la touche "Entrée" du clavier
+     */
     private void jPFMdpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPFMdpKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == 10) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // La touche pressée est la touche "Entrée"
             
+            // On valide les entrées en indiquant un clique sur le bouton "Valider"
             jBtValider.doClick();
         }
     }//GEN-LAST:event_jPFMdpKeyPressed
 
+    /**
+     * Action effectuée lorsque l'utilisateur presse la touche "Entrée" de son clavier pendant la saisie de l'identifiant
+     * @param evt L'événement d'action déclenché par la pression sur la touche "Entrée" du clavier
+     */
     private void jTFMailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFMailKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == 10) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // La touche pressée est la touche "Entrée"
             
+            // On déplace le focus de la saisie de l'identifiant à la saisie du mot de passe
             jPFMdp.requestFocus();
         }
     }//GEN-LAST:event_jTFMailKeyPressed

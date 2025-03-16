@@ -15,12 +15,11 @@ public class Visiteur {
     private String nom;
     private String prenom;
     
-    //*****Constructeur*****
     /**
-     *
-     * @param id
-     * @param nom
-     * @param prenom
+     * Constructeur de la classe Visiteur
+     * @param id Numero du visiteur
+     * @param nom Nom du visiteur
+     * @param prenom Prenom du visiteur
      */
     public Visiteur(int id, String nom, String prenom) {
         this.id = id;
@@ -28,51 +27,34 @@ public class Visiteur {
         this.prenom = prenom;
     }
     
-    //*****Getter et setter*****
+    /**
+     * Obtenir le numéro du visiteur
+     * @return String : Numéro du visiteur
+     */
     public int getId() {
         return id;
     }
     
-    public void setId(int id) {
-        this.id = id;
-    }
-    
+    /**
+     * Obtenir le nom du visiteur
+     * @return String : Nom du visiteur
+     */
     public String getNom() {
         return nom;
     }
     
-    public void setNom(String nom) {
-        if (nom == null || nom.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nom ne peut pas être nul ou vide");
-        }
-        this.nom = nom;
-    }
-    
+    /**
+     * Obtenir le prénom du visiteur
+     * @return String : Prénom du visiteur
+     */
     public String getPrenom() {
         return prenom;
     }
     
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-    
     /**
-     *
-     * @return
-     */
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + this.id;
-        hash = 29 * hash + Objects.hashCode(this.nom);
-        hash = 29 * hash + Objects.hashCode(this.prenom);
-        return hash;
-    }
-    
-    /**
-     * Méthodes
-     * @param obj
-     * @return
+     * Méthodes de comparaison entre deux Visiteur
+     * @param obj Objet à comparer avec le Visiteur
+     * @return boolean : true si les deux Visiteur sont égaux, sinon false
      */
     @Override
     public boolean equals(Object obj) {
@@ -96,8 +78,8 @@ public class Visiteur {
     }
     
     /**
-     *
-     * @return
+     * Retourne une représentation textuelle de l'objet Visiteur
+     * @return String : Une chaîne de caractères représentant le visiteur
      */
     @Override
     public String toString() {

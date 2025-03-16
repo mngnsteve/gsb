@@ -15,12 +15,11 @@ public class Praticien {
     private String nom;
     private String prenom;
     
-    //*****Constructeurs*****
     /**
-     *
-     * @param id
-     * @param nom
-     * @param prenom
+     * Constructeur de la classe Praticien
+     * @param id Numero du praticien
+     * @param nom Nom du praticien
+     * @param prenom Prenom du praticien
      */
     public Praticien(int id, String nom, String prenom) {
         this.id = id;
@@ -28,47 +27,34 @@ public class Praticien {
         this.prenom = prenom;
     }
     
-    //*****Getter et setter*****
+    /**
+     * Obtenir le numéro du praticien
+     * @return String : Numéro du praticien
+     */
     public int getId() {
         return id;
     }
     
-    public void setId(int id) {
-        this.id = id;
-    }
-    
+    /**
+     * Obtenir le nom du praticien
+     * @return String : Nom du praticien
+     */
     public String getNom() {
         return nom;
     }
     
-    public void setNom(String nom) {
-        if (nom == null || nom.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nom ne peut pas être nul ou vide");
-        }
-        this.nom = nom;
-    }
-    
+    /**
+     * Obtenir le prénom du praticien
+     * @return String : Prénom du praticien
+     */
     public String getPrenom() {
         return prenom;
     }
     
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id;
-        hash = 79 * hash + Objects.hashCode(this.nom);
-        hash = 79 * hash + Objects.hashCode(this.prenom);
-        return hash;
-    }
-    
     /**
-     * Méthodes
-     * @param obj
-     * @return
+     * Méthodes de comparaison entre deux Praticien
+     * @param obj Objet à comparer avec le Praticien
+     * @return boolean : true si les deux Praticien sont égaux, sinon false
      */
     @Override
     public boolean equals(Object obj) {
@@ -92,8 +78,8 @@ public class Praticien {
     }
     
     /**
-     *
-     * @return
+     * Retourne une représentation textuelle de l'objet Praticien
+     * @return String : Une chaîne de caractères représentant le praticien
      */
     @Override
     public String toString() {

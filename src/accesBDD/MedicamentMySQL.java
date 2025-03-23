@@ -30,7 +30,7 @@ public class MedicamentMySQL {
      * Etablissement d'une connexion avec la base de données
      */
     public MedicamentMySQL() {
-        laConnection = Connexion.getConnect("127.0.0.1", "bdgsb", "adminGSB", "mdpGSB");
+        laConnection = Connexion.getConnect("IP", "bdgsb", "adminGSB", "mdpGSB");
     }
     
     /**

@@ -268,7 +268,7 @@ public class JffConnexion extends javax.swing.JFrame {
     private void jMAideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMAideMouseClicked
         // TODO add your handling code here:
         try {
-            Desktop.getDesktop().browse(new URI("http://192.168.1.179/wiki/doku.php?id=manuel"));
+            Desktop.getDesktop().browse(new URI("LIEN GUIDE UTILISATEUR"));
         } catch (IOException | URISyntaxException e) 
         {
             e.printStackTrace();
